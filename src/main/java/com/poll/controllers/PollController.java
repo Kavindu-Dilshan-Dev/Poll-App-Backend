@@ -3,7 +3,9 @@ package com.poll.controllers;
 import com.poll.model.Poll;
 import com.poll.services.PollService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import request.Vote;
 
 import java.util.List;
 
@@ -24,4 +26,15 @@ public class PollController {
     public List<Poll> getAllPolls(){
         return pollService.getAllPolls();
     }
+
+    @GetMapping("/get-poll-by-id/{id}")
+    public ResponseEntity<Poll> getPollById(@PathVariable Long id){
+        return pollService.getPollById(id);
+    }
+
+    @PostMapping("/vote")
+    public void vote(@RequestBody Vote vote){
+         pollService.vote(vote.getPollId(), vote.getOptionIndex());
+    }
+
 }
